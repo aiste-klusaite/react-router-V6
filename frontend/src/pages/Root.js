@@ -8,7 +8,7 @@ export const RootLayout = () => {
     return <>
         <MainNavigation />
         <main>
-            {navigation.state === 'loading' && <p>Loading...</p>}
+            {navigation.state === 'loading' && <p style={{ textAlign: 'center'}}>Loading...</p>}
             <Outlet />
         </main>
     </>
