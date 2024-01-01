@@ -9,8 +9,9 @@ import { RootLayout } from './pages/Root';
 import { EventsRootLayout } from './pages/EventsRoot';
 import {eventsLoader, eventLoader} from './utils/loaderData';
 import { ErrorPage } from './pages/ErrorPage';
-import { submitAction, deleteAction, newsLetterAction } from './utils/actions';
+import { submitAction, deleteAction, newsLetterAction, authAction } from './utils/actions';
 import { NewsletterPage } from './pages/Newsletter';
+import { AuthenticationPage } from './pages/Authentication';
 
 const router = createBrowserRouter([
   { path: '/', element: <RootLayout />, errorElement: <ErrorPage />, 
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
       ]},
       { path: 'new', element: <NewEventPage />, action: submitAction },
     ]},
+    {
+      path: 'auth',
+      element: <AuthenticationPage />,
+      action: authAction,
+    },
     { path: 'newsletter', element: <NewsletterPage />, action: newsLetterAction },
   ]},
 ]);
