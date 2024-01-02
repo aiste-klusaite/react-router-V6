@@ -1,4 +1,4 @@
-# react-router-V6
+# react-router-and-auth
 
 This project actually contains two projects:
 - A React.js application (i.e., the frontend SPA)
