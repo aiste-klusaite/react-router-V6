@@ -1,8 +1,11 @@
 import { json, redirect } from "react-router-dom";
 
+import { getAuthToken } from "./auth";
+
 export const submitAction = async ({ request, params }) => {
   const method = request.method;
   const data = await request.formData();
+  const token = getAuthToken();
   
     const eventData = {
       title: data.get('title'),
@@ -22,6 +25,7 @@ export const submitAction = async ({ request, params }) => {
       method: method,
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
       },
       body: JSON.stringify(eventData),
     });
@@ -39,9 +43,13 @@ export const submitAction = async ({ request, params }) => {
 
   export const deleteAction = async({ params, request }) => {
     const eventId = params.eventId;
+    const token = getAuthToken();
 
     const response = await fetch(`http://localhost:8080/events/${eventId}`, {
         method: request.method,
+        headers: {
+          'Authorization': 'Bearer ' + token,
+        }
     });
 
     if (!response.ok) {
@@ -91,6 +99,11 @@ export const submitAction = async ({ request, params }) => {
     if (!response.ok) {
       throw json({ message: 'Could not authenticate user.'}, { status: 500 });
     }
+
+    const resData = await response.json();
+    const token = resData.token;
+
+    localStorage.setItem('token', token);
 
     return redirect('/');
   }
