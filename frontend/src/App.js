@@ -7,13 +7,13 @@ import { NewEventPage } from './pages/NewEventPage';
 import { EditEventPage } from './pages/EditEvent';
 import { RootLayout } from './pages/Root';
 import { EventsRootLayout } from './pages/EventsRoot';
-import {eventsLoader, eventLoader} from './utils/loaderData';
+import { eventsLoader, eventLoader } from './router/loaders/loaderData';
 import { ErrorPage } from './pages/ErrorPage';
-import { submitAction, deleteAction, newsLetterAction, authAction, logoutAction } from './utils/actions';
+import { submitAction, deleteAction, newsLetterAction, authAction, logoutAction } from './router/actions/actions';
 import { NewsletterPage } from './pages/Newsletter';
 import { AuthenticationPage } from './pages/Authentication';
 import { LogoutPage } from './pages/Logout';
-import { tokenLoader } from './utils/auth';
+import { checkAuthLoader, tokenLoader } from './utils/auth';
 
 const router = createBrowserRouter([
   { path: '/', 
@@ -35,9 +35,9 @@ const router = createBrowserRouter([
           element: <EventDetailPage />,
           action: deleteAction,
         },
-        { path: 'edit', element: <EditEventPage/>, action: submitAction },
+        { path: 'edit', element: <EditEventPage/>, action: submitAction, loader: checkAuthLoader },
       ]},
-      { path: 'new', element: <NewEventPage />, action: submitAction },
+      { path: 'new', element: <NewEventPage />, action: submitAction, loader: checkAuthLoader },
     ]},
     {
       path: 'auth',
