@@ -90,8 +90,6 @@ export const submitAction = async ({ request, params }) => {
       body: JSON.stringify(authData),
     });
 
-    console.log(response.data);
-
     if (response.status === 422 || response.status === 401) {
       return response;
     }
@@ -106,4 +104,12 @@ export const submitAction = async ({ request, params }) => {
     localStorage.setItem('token', token);
 
     return redirect('/');
+  }
+
+  export const logoutAction = () => {
+    localStorage.removeItem('token');
+
+    console.log('clicked');
+
+    return redirect('/')
   }

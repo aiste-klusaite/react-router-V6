@@ -9,12 +9,18 @@ import { RootLayout } from './pages/Root';
 import { EventsRootLayout } from './pages/EventsRoot';
 import {eventsLoader, eventLoader} from './utils/loaderData';
 import { ErrorPage } from './pages/ErrorPage';
-import { submitAction, deleteAction, newsLetterAction, authAction } from './utils/actions';
+import { submitAction, deleteAction, newsLetterAction, authAction, logoutAction } from './utils/actions';
 import { NewsletterPage } from './pages/Newsletter';
 import { AuthenticationPage } from './pages/Authentication';
+import { LogoutPage } from './pages/Logout';
+import { tokenLoader } from './utils/auth';
 
 const router = createBrowserRouter([
-  { path: '/', element: <RootLayout />, errorElement: <ErrorPage />, 
+  { path: '/', 
+    element: <RootLayout />, 
+    errorElement: <ErrorPage />, 
+    id: 'root',
+    loader: tokenLoader,
     children: [
     { index: true, element: <HomePage />},
     { path: 'events', element: <EventsRootLayout />, errorElement: <ErrorPage />, 
@@ -39,6 +45,9 @@ const router = createBrowserRouter([
       action: authAction,
     },
     { path: 'newsletter', element: <NewsletterPage />, action: newsLetterAction },
+    {
+      path: 'logout', element: <LogoutPage />, action: logoutAction,
+    }
   ]},
 ]);
 
