@@ -1,6 +1,6 @@
 import { json, redirect } from "react-router-dom";
 
-import { getAuthToken } from "./auth";
+import { getAuthToken } from "../../utils/auth";
 
 export const submitAction = async ({ request, params }) => {
   const method = request.method;
@@ -82,6 +82,9 @@ export const submitAction = async ({ request, params }) => {
       password: data.get('password'),
     }
 
+    const expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+
     const response = await fetch(`http://localhost:8080/${mode}`, {
       method: 'POST',
       headers: {
@@ -102,14 +105,16 @@ export const submitAction = async ({ request, params }) => {
     const token = resData.token;
 
     localStorage.setItem('token', token);
+    localStorage.setItem('expiration', expiration.toISOString());
 
     return redirect('/');
   }
 
   export const logoutAction = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
 
-    console.log('clicked');
+    console.log('miau');
 
     return redirect('/')
   }
